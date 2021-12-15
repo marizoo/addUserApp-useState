@@ -6,6 +6,7 @@ import { ColumnIt } from "./globalStyle";
 import ListUser from "./components/ListUser";
 import AddUser from "./components/AddUser";
 import Button from "./UI/Button";
+import AddUser1 from "./components/AddUser1";
 
 const Container = styled.div`
 width: 100vw;
@@ -48,7 +49,8 @@ const App = () => {
   <Container>
     <Card>
       {!showForm && (<Button onClick={toggleForm} >Add User</Button>)}
-      {showForm && <AddUser onCloseForm={toggleForm} onNewData={listNewData} />}
+      {/* {showForm && <AddUser onCloseForm={toggleForm} onNewData={listNewData} />} */}
+      {showForm && <AddUser1 onCloseForm={toggleForm} onNewData={listNewData} />}
       
     </Card>
     <Card>
