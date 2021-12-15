@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import styled from 'styled-components';
 import { CenterIt, ColumnIt } from '../globalStyle';
 import Button from '../UI/Button';
+import ErrorModal from '../UI/ErrorModal';
 
 const Form = styled.form`
 width: 90%;
@@ -31,12 +32,11 @@ ${CenterIt};
 `;
 
 
-
-
 const AddUser = ({onNewData, onCloseForm}) => {
 
     const [addName, setAddName] = useState("")
     const [addAge, setAddAge] = useState("")
+    const [errors, setErrors] = useState()
 
     const addNameHandler = (ev) => {
         setAddName(ev.target.value);
@@ -50,10 +50,18 @@ const AddUser = ({onNewData, onCloseForm}) => {
         ev.preventDefault();
 
         if(addName.trim().length === 0 || addAge.trim().length === 0){
+            setErrors({
+                title:'invalid input',
+                message: 'Please enter a valid name and age (non-empty values).'
+            })
             return;
         }
 
         if(+addAge < 1 || +addAge > 100) {
+            setErrors({
+                title:'invalid age',
+                message: 'Please enter a valid age (> 0).'
+            })
             return;
         }
 
@@ -73,18 +81,34 @@ const AddUser = ({onNewData, onCloseForm}) => {
         onCloseForm(ev)
     }
 
+    const errorHandler = () => {
+        setErrors(null)
+    }
+
     return (
-        <Form onSubmit={submitHandler}>
-        <Label htmlFor='username'>Username:</Label>
-          <Input required id="username" type="text" placeholder='name' value={addName} onChange={addNameHandler}/>
-        <Label htmlFor='age'>Age:</Label>
-          <Input required id="age" type="number" min="1" max= "99" placeholder='age' value={addAge} onChange={addAgeHandler}/>
-          <ButtonContainer>
-          <Button type="submit">Add User</Button>
-          <Button onClick={closeForm}>Cancel</Button>
-          </ButtonContainer>
-          
-        </Form>
+        <>
+        {errors && (
+            <ErrorModal
+            title={errors.title} 
+            message={errors.message}
+            onCloseModal={errorHandler}
+            />
+        )}
+
+       
+            <Form onSubmit={submitHandler}>
+            <Label htmlFor='username'>Username:</Label>
+            <Input  id="username" type="text" placeholder='name' value={addName} onChange={addNameHandler}/>
+            <Label htmlFor='age'>Age:</Label>
+            <Input  id="age" type="number" placeholder='age' value={addAge} onChange={addAgeHandler}/>
+            <ButtonContainer>
+            <Button type="submit">Add User</Button>
+            <Button onClick={closeForm}>Cancel</Button>
+            </ButtonContainer>  
+            </Form>
+        
+            
+        </>
     )
 }
 

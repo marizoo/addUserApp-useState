@@ -9,6 +9,7 @@ margin: 20px;
 padding: 25px;
 width: 600px;
 ${CenterIt};
+flex-direction: column;
 `;
 
 

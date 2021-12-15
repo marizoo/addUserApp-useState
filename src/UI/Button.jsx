@@ -19,7 +19,7 @@ cursor: pointer;
 
 const Button = (props) => {
     return (
-        <Container onClick={props.onClick} type={props.type || 'button'}>
+        <Container onClick={props.onClick} type={props.type || 'button'} >
             {props.children}
         </Container>
     )
